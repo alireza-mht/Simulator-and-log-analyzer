@@ -25,7 +25,7 @@ public class EdgeOperTaskNames {
         EdgeOperTaskName edgeOperTaskName = edgeTaskBoltNames.stream().filter(pairs -> pairs.getTaskName().equals(task))
                 .findAny().orElse(null);
         if (edgeOperTaskName != null) {
-            return edgeOperTaskName.getTaskName();
+            return edgeOperTaskName.getEdgeName();
         }else return null;
     }
 
@@ -51,6 +51,15 @@ public class EdgeOperTaskNames {
 
         if (edgeOperTaskName != null) {
             return edgeOperTaskName.getOperatorName();
+        }else return null;
+    }
+
+    public String getTaskFromOperator(String operator){
+        EdgeOperTaskName edgeOperTaskName = edgeTaskBoltNames.stream().filter(pairs -> pairs.getOperatorName().equals(operator))
+                .findAny().orElse(null);
+
+        if (edgeOperTaskName != null) {
+            return edgeOperTaskName.getTaskName();
         }else return null;
     }
 

@@ -121,7 +121,7 @@ public class Operator {
         }
 
         double startTime = maxReceivingTime;
-        // we should check wether the system is in running state or it is idle
+        // we should check whether the system is in running state or it is idle
         // if it is in running state we should calculate the idle time which is equal to latest finish time of running interval
         if (runningIntervals.size() > 0) {
             startTime = Math.max(this.runningIntervals.get(runningIntervals.size() - 1).getValue(),

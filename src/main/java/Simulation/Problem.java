@@ -1,10 +1,10 @@
 package Simulation;
 
 import Simulation.GWO.*;
+import Simulation.LogAnalysis.LogAnalysis;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.util.Pair;
-import org.jgrapht.Graph;
 import org.jgrapht.graph.DirectedAcyclicGraph;
 import org.jgrapht.nio.dot.DOTImporter;
 import org.jgrapht.traverse.TopologicalOrderIterator;
@@ -132,6 +132,9 @@ public class Problem {
 //                System.out.println(e);
 //            }
 //        }
+        //first element in solution integer is the first element in operator avalible edge node
+        // the vlaue of solution integer is assined based on the order of value in operatorAvalibleEdgeNode
+
         List<Integer> solutionsInteger;
         solutionsInteger = solution.bestSolutionInteger();
         FileWriter fileWriter;
@@ -139,8 +142,8 @@ public class Problem {
             fileWriter = new FileWriter(this.RESULT_FILE_PATH);
             int q = 0;
             for (Operator operator : topology.getOperators()) {
-                fileWriter.write("v" + operator.getId() + " " + operatorsAvailableEdgeNodes.get(operator).
-                        get(solutionsInteger.get(q) - 1).getName() + "\n");
+                fileWriter.write(  operatorsAvailableEdgeNodes.get(operator).
+                        get(solutionsInteger.get(q) - 1).getName()+ " "+ "v" + operator.getId() + "\n");
                 q++;
             }
             fileWriter.close();
@@ -168,12 +171,13 @@ public class Problem {
         double sum = 0;
         int numberOfMessage = 0;
         do {
+            time += 1;
             int i = 0;
             for (Operator operator : topology.getSource()) {
 
                 sum += INPUT_DATA_RATE.get(operator);
                 numberOfMessage++;
-                Event event = new Event(null, operator, (int) Math.round(sum), 0, time,
+                Event event = new Event(null, operator, (int) Math.floor(sum), 0, time,
                         time);
                 if (sum > 1) {
                     sum -= 1;
@@ -189,7 +193,7 @@ public class Problem {
 
             }
 
-            time += 1;
+
         } while (!(finish.size() == topology.getSinks().size()));
 
     }
@@ -237,89 +241,36 @@ public class Problem {
         return new EdgeNetwork(edgeNodes, generateBandwidth(edgeNodes), generateLatency(edgeNodes));
     }
 
-//    public static List<EdgeNode> generateEdgeNodes(int size) {
-//
-////        List<EdgeNode> edgeNodes = new ArrayList<>();
-//
-////        for (int i = 0; i < 10; i++) {
-//////            edgeNodes.add(new Simulation.EdgeNode(2200 + 1000 * i, 800 + 200 * i, 800 + 200 * i));
-////            edgeNodes.add(new EdgeNode(i, "The", 1, 2451, 1400, 1500));
-////        }
-////        for (int i = 10; i < 25; i++) {
-////            edgeNodes.add(new EdgeNode(i, "sd", 1, 2451, 14000, 26000));
-////        }
-////        for (int i = 25; i < size; i++) {
-////            edgeNodes.add(new EdgeNode(i, "fd", 1, 2451, 3899000, 4886000));
-////        }
-////
-//////        // Connecting all the edge nodes
-////        for (EdgeNode i : edgeNodes) {
-////            for (EdgeNode j : edgeNodes) {
-////                if (i != j) {
-////                    i.addNeighbour(j);
-////                }
-////            }
-////        }
-//
-////        return edgeNodes;
-//
-//    }
-
     public List<EdgeNode> generateEdgeNodes(int size) {
         Map<Pair<EdgeNode, EdgeNode>, Double> latency = new HashMap<>();
 
-//        Map<EdgeNode, Double> inBandMap= new HashMap<>();
-//        Map<EdgeNode, Double> outBandMap = new HashMap<>();
-//        Map<EdgeNode, Double> inLatencyMap = new HashMap<>();
-//        Map<EdgeNode, Double> outLatencyMap = new HashMap<>();
-
         List<EdgeNode> edgeNodes = new ArrayList<>();
         String bandwidthPath = "Bandwidth.txt";
-        String hostPath = "pi3-hosts.txt";
+        String hostPath = "pi3-test.txt";
         String threadPath = "thread.txt";
 
         try {
             int i = 0;
             while(i<size) {
-                String line = Files.readAllLines(Path.of("../../simfiles/").resolve(bandwidthPath)).get(i);
-                String name = Files.readAllLines(Path.of("../../simfiles/").resolve(hostPath)).get(i);
+                String line = Files.readAllLines(Path.of("./").resolve(bandwidthPath)).get(i);
+                String name = Files.readAllLines(Path.of("./").resolve(hostPath)).get(i);
 
-                double inBand = Double.parseDouble(line.split("\t")[0]);
-                double inLatency = Double.parseDouble(line.split("\t")[1]);
-                double outBand = Double.parseDouble(line.split("\t")[2]);
-                double outLatency = Double.parseDouble(line.split("\t")[3]);
+                //in byte per second
+                double inBand = Double.parseDouble(line.split("\t")[0])*1000000/8;
+                //latency in second
+                double inLatency = Double.parseDouble(line.split("\t")[1])/1000;
+                double outBand = Double.parseDouble(line.split("\t")[2])*1000000/8;
+                double outLatency = Double.parseDouble(line.split("\t")[3])/1000;
 
-                int thread = Integer.parseInt(Files.readAllLines(Path.of("../../simfiles/").resolve(threadPath)).get(i));
-                System.out.printf("hi");
+                int thread = Integer.parseInt(Files.readAllLines(Path.of("./").resolve(threadPath)).get(i));
+
                 EdgeNode edgeNode = new EdgeNode(i, name,thread, TEST_BED_INSTRUCTION_SIZE,inBand,outBand, inLatency,outLatency);
                 edgeNodes.add(edgeNode);
-//                inBandMap.put(edgeNode,inBand);
-//                outBandMap.put(edgeNode,outBand);
-//                inLatencyMap.put(edgeNode,inLatency);
-//                outLatencyMap.put(edgeNode,outLatency);
                 i+=1;
-//                String name =
-//                int threadNum;
-//                edgeNodes.add(new EdgeNode(i, att,thread,TEST_BED_INSTRUCTION_SIZE,))
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
-//        for (int i = 0; i < 10; i++) {
-////            edgeNodes.add(new Simulation.EdgeNode(2200 + 1000 * i, 800 + 200 * i, 800 + 200 * i));
-//            edgeNodes.add(new EdgeNode(i, "The", 1, 2451, 1400, 1500));
-//        }
-//        for (int i = 10; i < 25; i++) {
-//            edgeNodes.add(new EdgeNode(i, "sd", 1, 2451, 1400, 2600));
-//        }
-//        for (int i = 25; i < size; i++) {
-//            edgeNodes.add(new EdgeNode(i, "fd", 1, 2451, 3899000, 4886000));
-//        }
-
 //        // Connecting all the edge nodes
         for (EdgeNode i : edgeNodes) {
             for (EdgeNode j : edgeNodes) {
@@ -470,6 +421,7 @@ public class Problem {
                 e.printStackTrace();
             }
 
+            assert infoSave != null;
             operators.put(Integer.parseInt(vertex.replace("v", "")), new Operator(Integer.parseInt(vertex.replace("v", "")), vertex,
                     incomingMessageSize,
                     outgoingMessageSize,
