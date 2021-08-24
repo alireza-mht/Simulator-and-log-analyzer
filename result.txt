@@ -1,0 +1,208 @@
+2021-08-16 10:57:02,015 84131    1629125821	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_inRate.count     	9
+2021-08-16 10:57:02,021 84137    1629125821	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_inRate.mean_rate 	1.499721571666153E-7
+2021-08-16 10:57:02,022 84138    1629125821	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_outRate.count    	9
+2021-08-16 10:57:02,028 84144    1629125821	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_outRate.mean_rate	1.4997262404969638E-7
+2021-08-16 10:57:02,039 84155    1629125821	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_inRate.count     	40
+2021-08-16 10:57:02,044 84160    1629125821	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_inRate.mean_rate 	6.665675790186212E-7
+2021-08-16 10:57:02,045 84161    1629125821	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_outRate.count    	0
+2021-08-16 10:57:02,048 84164    1629125821	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_outRate.mean_rate	0.0
+2021-08-16 10:57:02,157 84273    1629125822	pi3-r1-m2-l5-p1.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:35832=9}, messageBytes={7-3=711}}
+2021-08-16 10:57:02,161 84277    1629125822	pi3-r1-m2-l5-p1.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=42850, sys-ms=4890}
+2021-08-16 10:57:02,247 84363    1629125822	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_inRate.count     	107
+2021-08-16 10:57:02,252 84368    1629125822	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_inRate.mean_rate 	1.7830791419096884E-6
+2021-08-16 10:57:02,252 84368    1629125822	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_outRate.count    	107
+2021-08-16 10:57:02,257 84373    1629125822	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_outRate.mean_rate	1.7830846497862162E-6
+2021-08-16 10:57:02,261 84377    1629125822	pi3-r1-m2-l1-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fe3b:89c9:34584=9, /fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:38494=32}, messageBytes={9-6=10029, 3-6=1755}}
+2021-08-16 10:57:02,263 84379    1629125822	pi3-r1-m2-l1-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=49260, sys-ms=6730}
+2021-08-16 10:57:02,461 84577    1629125822	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_inRate.count     	75
+2021-08-16 10:57:02,465 84581    1629125822	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_inRate.mean_rate 	1.2498117735559572E-6
+2021-08-16 10:57:02,466 84582    1629125822	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_outRate.count    	75
+2021-08-16 10:57:02,471 84587    1629125822	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_outRate.mean_rate	1.2498145906303872E-6
+2021-08-16 10:57:02,494 84610    1629125822	pi3-r1-m2-l2-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:40708=8, /fd65:aeb8:64e2:a7c:ba27:ebff:fe68:e899:55262=99}, messageBytes={5-9=632, 8-9=19832}}
+2021-08-16 10:57:02,497 84613    1629125822	pi3-r1-m2-l2-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=44360, sys-ms=5030}
+2021-08-16 10:57:02,706 84822    1629125822	pi3-r1-m2-l1-p4.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:33246=75}, messageBytes={9-2=23421}}
+2021-08-16 10:57:02,708 84824    1629125822	pi3-r1-m2-l1-p4.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=51070, sys-ms=6840}
+2021-08-16 10:57:02,758 84874    1629125822	pi3-r1-m2-l2-p3.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:57:02,761 84877    1629125822	pi3-r1-m2-l2-p3.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=40530, sys-ms=4020}
+2021-08-16 10:57:03,490 85606    1629125823	pi3-r1-m2-l2-p1.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:57:03,491 85607    1629125823	pi3-r1-m2-l2-p1.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=53230, sys-ms=5750}
+2021-08-16 10:57:03,815 85931    1629125823	pi3-r1-m2-l3-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:57:03,818 85934    1629125823	pi3-r1-m2-l3-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=44000, sys-ms=3960}
+2021-08-16 10:57:06,497 88613    1629125826	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_inRate.count     	63
+2021-08-16 10:57:06,501 88617    1629125826	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_inRate.mean_rate 	9.949638040317322E-7
+2021-08-16 10:57:06,501 88617    1629125826	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_outRate.count    	63
+2021-08-16 10:57:06,505 88621    1629125826	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_outRate.mean_rate	9.949677684163397E-7
+2021-08-16 10:57:06,881 88997    1629125826	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_inRate.count     	63
+2021-08-16 10:57:06,883 88999    1629125826	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_inRate.mean_rate 	9.948519951869654E-7
+2021-08-16 10:57:06,883 88999    1629125826	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_outRate.count    	63
+2021-08-16 10:57:06,885 89001    1629125826	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_outRate.mean_rate	9.94854879427082E-7
+2021-08-16 10:57:23,980 106096   1629125843	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_inRate.count     	107
+2021-08-16 10:57:23,982 106098   1629125843	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_inRate.mean_rate 	1.7826646349418792E-6
+2021-08-16 10:57:23,983 106099   1629125843	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_outRate.count    	0
+2021-08-16 10:57:23,984 106100   1629125843	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_outRate.mean_rate	0.0
+2021-08-16 10:57:24,066 106182   1629125844	pi3-r1-m2-l5-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:55596=2, /fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:55348=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fefc:80f1:33828=1, /fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:50224=2, /fd65:aeb8:64e2:a7c:ba27:ebff:feff:aca5:47962=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe40:483d:55400=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe08:be9c:55724=1, /fd65:aeb8:64e2:a7c:ba27:ebff:fe3b:89c9:35942=2}, messageBytes={2-1=851, 3-1=826, 4-1=817, 5-1=1064, 6-1=838, 7-1=1074, -1-1=31912, 9-1=862}}
+2021-08-16 10:57:24,067 106183   1629125844	pi3-r1-m2-l5-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=35870, sys-ms=2910}
+2021-08-16 10:57:24,262 106378   1629125844	pi3-r1-m2-l4-p4.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fe40:483d:58182=107}, messageBytes={2-4=46384}}
+2021-08-16 10:57:24,264 106380   1629125844	pi3-r1-m2-l4-p4.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=36680, sys-ms=3830}
+2021-08-16 10:57:25,354 107470   1629125845	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_inRate.count     	138
+2021-08-16 10:57:25,356 107472   1629125845	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_inRate.mean_rate 	2.299567203553993E-6
+2021-08-16 10:57:25,356 107472   1629125845	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_outRate.count    	138
+2021-08-16 10:57:25,357 107473   1629125845	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_outRate.mean_rate	2.2995733665537822E-6
+2021-08-16 10:57:25,650 107766   1629125845	pi3-r1-m2-l5-p3.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:45834=70, /fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:53270=68}, messageBytes={5-8=5372, 7-8=5530}}
+2021-08-16 10:57:25,652 107768   1629125845	pi3-r1-m2-l5-p3.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=37380, sys-ms=3830}
+2021-08-16 10:58:01,890 144006   1629125881	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_inRate.count     	14
+2021-08-16 10:58:01,891 144007   1629125881	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_inRate.mean_rate 	1.1665699098806859E-7
+2021-08-16 10:58:01,891 144007   1629125881	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_outRate.count    	14
+2021-08-16 10:58:01,892 144008   1629125881	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_outRate.mean_rate	1.1665714226525284E-7
+2021-08-16 10:58:01,943 144059   1629125881	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_inRate.count     	74
+2021-08-16 10:58:01,945 144061   1629125881	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_inRate.mean_rate 	6.166347725845125E-7
+2021-08-16 10:58:01,945 144061   1629125881	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_outRate.count    	0
+2021-08-16 10:58:01,945 144061   1629125881	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_outRate.mean_rate	0.0
+2021-08-16 10:58:02,117 144233   1629125882	pi3-r1-m2-l5-p1.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:35832=5}, messageBytes={7-3=398}}
+2021-08-16 10:58:02,118 144234   1629125882	pi3-r1-m2-l5-p1.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3270, sys-ms=2270}
+2021-08-16 10:58:02,197 144313   1629125882	pi3-r1-m2-l1-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fe3b:89c9:34584=5, /fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:38494=28}, messageBytes={9-6=8336, 3-6=1010}}
+2021-08-16 10:58:02,198 144314   1629125882	pi3-r1-m2-l1-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4100, sys-ms=2070}
+2021-08-16 10:58:02,214 144330   1629125882	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_inRate.count     	222
+2021-08-16 10:58:02,215 144331   1629125882	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_inRate.mean_rate 	1.8499195346049789E-6
+2021-08-16 10:58:02,215 144331   1629125882	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_outRate.count    	222
+2021-08-16 10:58:02,216 144332   1629125882	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_outRate.mean_rate	1.8499234582761277E-6
+2021-08-16 10:58:02,445 144561   1629125882	pi3-r1-m2-l2-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:40708=17, /fd65:aeb8:64e2:a7c:ba27:ebff:fe68:e899:55262=98}, messageBytes={5-9=1350, 8-9=19746}}
+2021-08-16 10:58:02,447 144563   1629125882	pi3-r1-m2-l2-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=5030, sys-ms=2340}
+2021-08-16 10:58:02,455 144571   1629125882	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_inRate.count     	161
+2021-08-16 10:58:02,456 144572   1629125882	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_inRate.mean_rate 	1.3415927066507782E-6
+2021-08-16 10:58:02,456 144572   1629125882	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_outRate.count    	161
+2021-08-16 10:58:02,456 144572   1629125882	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_outRate.mean_rate	1.3415944982514622E-6
+2021-08-16 10:58:02,732 144848   1629125882	pi3-r1-m2-l1-p4.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:33246=86}, messageBytes={9-2=26496}}
+2021-08-16 10:58:02,733 144849   1629125882	pi3-r1-m2-l1-p4.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4900, sys-ms=2130}
+2021-08-16 10:58:02,742 144858   1629125882	pi3-r1-m2-l2-p3.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:58:02,743 144859   1629125882	pi3-r1-m2-l2-p3.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=2890, sys-ms=1190}
+2021-08-16 10:58:03,440 145556   1629125883	pi3-r1-m2-l2-p1.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:58:03,441 145557   1629125883	pi3-r1-m2-l2-p1.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3160, sys-ms=1310}
+2021-08-16 10:58:03,771 145887   1629125883	pi3-r1-m2-l3-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:58:03,774 145890   1629125883	pi3-r1-m2-l3-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3440, sys-ms=1300}
+2021-08-16 10:58:06,578 148694   1629125886	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_inRate.count     	123
+2021-08-16 10:58:06,579 148695   1629125886	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_inRate.mean_rate 	9.966578114548172E-7
+2021-08-16 10:58:06,579 148695   1629125886	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_outRate.count    	123
+2021-08-16 10:58:06,579 148695   1629125886	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_outRate.mean_rate	9.96658596320891E-7
+2021-08-16 10:58:06,960 149076   1629125886	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_inRate.count     	123
+2021-08-16 10:58:06,961 149077   1629125886	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_inRate.mean_rate 	9.96613371268909E-7
+2021-08-16 10:58:06,961 149077   1629125886	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_outRate.count    	123
+2021-08-16 10:58:06,962 149078   1629125886	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_outRate.mean_rate	9.96614319666952E-7
+2021-08-16 10:58:23,947 166063   1629125903	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_inRate.count     	189
+2021-08-16 10:58:23,948 166064   1629125903	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_inRate.mean_rate 	1.5747356345627213E-6
+2021-08-16 10:58:23,948 166064   1629125903	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_outRate.count    	0
+2021-08-16 10:58:23,949 166065   1629125903	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_outRate.mean_rate	0.0
+2021-08-16 10:58:24,046 166162   1629125904	pi3-r1-m2-l5-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:55596=2, /fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:55348=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fefc:80f1:33828=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:50224=2, /fd65:aeb8:64e2:a7c:ba27:ebff:feff:aca5:47962=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe40:483d:55400=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe08:be9c:55724=1, /fd65:aeb8:64e2:a7c:ba27:ebff:fe3b:89c9:35942=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe68:e899:42358=2}, messageBytes={2-1=855, 3-1=826, 4-1=817, 5-1=1076, 6-1=839, 7-1=1100, 8-1=878, -1-1=40541, 9-1=865}}
+2021-08-16 10:58:24,046 166162   1629125904	pi3-r1-m2-l5-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=5730, sys-ms=1200}
+2021-08-16 10:58:24,231 166347   1629125904	pi3-r1-m2-l4-p4.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fe40:483d:58182=83}, messageBytes={2-4=35415}}
+2021-08-16 10:58:24,232 166348   1629125904	pi3-r1-m2-l4-p4.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=7880, sys-ms=2270}
+2021-08-16 10:58:25,331 167447   1629125905	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_inRate.count     	232
+2021-08-16 10:58:25,332 167448   1629125905	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_inRate.mean_rate 	1.933202945367558E-6
+2021-08-16 10:58:25,332 167448   1629125905	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_outRate.count    	232
+2021-08-16 10:58:25,334 167450   1629125905	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_outRate.mean_rate	1.9332056864200166E-6
+2021-08-16 10:58:25,615 167731   1629125905	pi3-r1-m2-l5-p3.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:45834=53, /fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:53270=41}, messageBytes={5-8=3266, 7-8=4221}}
+2021-08-16 10:58:25,616 167732   1629125905	pi3-r1-m2-l5-p3.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=7160, sys-ms=2390}
+2021-08-16 10:59:01,887 204003   1629125941	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_inRate.count     	23
+2021-08-16 10:59:01,888 204004   1629125941	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_inRate.mean_rate 	1.277705654551728E-7
+2021-08-16 10:59:01,889 204005   1629125941	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_outRate.count    	23
+2021-08-16 10:59:01,890 204006   1629125941	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_outRate.mean_rate	1.2777067196163225E-7
+2021-08-16 10:59:01,942 204058   1629125941	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_inRate.count     	120
+2021-08-16 10:59:01,943 204059   1629125941	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_inRate.mean_rate 	6.666421520681482E-7
+2021-08-16 10:59:01,943 204059   1629125941	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_outRate.count    	0
+2021-08-16 10:59:01,943 204059   1629125941	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_outRate.mean_rate	0.0
+2021-08-16 10:59:02,118 204234   1629125942	pi3-r1-m2-l5-p1.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:35832=9}, messageBytes={7-3=720}}
+2021-08-16 10:59:02,118 204234   1629125942	pi3-r1-m2-l5-p1.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3390, sys-ms=2330}
+2021-08-16 10:59:02,192 204308   1629125942	pi3-r1-m2-l1-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fe3b:89c9:34584=9, /fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:38494=37}, messageBytes={9-6=11201, 3-6=1827}}
+2021-08-16 10:59:02,192 204308   1629125942	pi3-r1-m2-l1-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4090, sys-ms=2220}
+2021-08-16 10:59:02,211 204327   1629125942	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_inRate.count     	332
+2021-08-16 10:59:02,213 204329   1629125942	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_inRate.mean_rate 	1.8443758979682798E-6
+2021-08-16 10:59:02,213 204329   1629125942	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_outRate.count    	332
+2021-08-16 10:59:02,215 204331   1629125942	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_outRate.mean_rate	1.8443769321949468E-6
+2021-08-16 10:59:02,449 204565   1629125942	pi3-r1-m2-l2-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:40708=24, /fd65:aeb8:64e2:a7c:ba27:ebff:fe68:e899:55262=87}, messageBytes={5-9=1920, 8-9=17658}}
+2021-08-16 10:59:02,450 204566   1629125942	pi3-r1-m2-l2-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4560, sys-ms=2300}
+2021-08-16 10:59:02,461 204577   1629125942	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_inRate.count     	235
+2021-08-16 10:59:02,462 204578   1629125942	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_inRate.mean_rate 	1.3055002915378752E-6
+2021-08-16 10:59:02,463 204579   1629125942	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_outRate.count    	235
+2021-08-16 10:59:02,464 204580   1629125942	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_outRate.mean_rate	1.3055016037725381E-6
+2021-08-16 10:59:02,723 204839   1629125942	pi3-r1-m2-l1-p4.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:33246=74}, messageBytes={9-2=22030}}
+2021-08-16 10:59:02,724 204840   1629125942	pi3-r1-m2-l1-p4.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4500, sys-ms=2320}
+2021-08-16 10:59:02,735 204851   1629125942	pi3-r1-m2-l2-p3.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:59:02,736 204852   1629125942	pi3-r1-m2-l2-p3.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=2850, sys-ms=1210}
+2021-08-16 10:59:03,437 205553   1629125943	pi3-r1-m2-l2-p1.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:59:03,437 205553   1629125943	pi3-r1-m2-l2-p1.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3330, sys-ms=1210}
+2021-08-16 10:59:03,779 205895   1629125943	pi3-r1-m2-l3-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 10:59:03,781 205897   1629125943	pi3-r1-m2-l3-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=2910, sys-ms=1240}
+2021-08-16 10:59:06,656 208772   1629125946	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_inRate.count     	183
+2021-08-16 10:59:06,656 208772   1629125946	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_inRate.mean_rate 	9.973421215103227E-7
+2021-08-16 10:59:06,656 208772   1629125946	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_outRate.count    	183
+2021-08-16 10:59:06,657 208773   1629125946	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_outRate.mean_rate	9.973434438590484E-7
+2021-08-16 10:59:07,036 209152   1629125946	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_inRate.count     	183
+2021-08-16 10:59:07,037 209153   1629125946	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_inRate.mean_rate 	9.973099585573247E-7
+2021-08-16 10:59:07,038 209154   1629125946	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_outRate.count    	183
+2021-08-16 10:59:07,039 209155   1629125946	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_outRate.mean_rate	9.97311116630783E-7
+2021-08-16 10:59:23,946 226062   1629125963	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_inRate.count     	264
+2021-08-16 10:59:23,947 226063   1629125963	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_inRate.mean_rate 	1.4664965512010176E-6
+2021-08-16 10:59:23,948 226064   1629125963	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_outRate.count    	0
+2021-08-16 10:59:23,948 226064   1629125963	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_outRate.mean_rate	0.0
+2021-08-16 10:59:24,048 226164   1629125964	pi3-r1-m2-l5-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:55596=2, /fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:55348=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fefc:80f1:33828=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:50224=2, /fd65:aeb8:64e2:a7c:ba27:ebff:feff:aca5:47962=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe40:483d:55400=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe08:be9c:55724=1, /fd65:aeb8:64e2:a7c:ba27:ebff:fe3b:89c9:35942=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe68:e899:42358=2}, messageBytes={2-1=855, 3-1=849, 4-1=817, 5-1=1076, 6-1=839, 7-1=1100, 8-1=877, -1-1=40540, 9-1=865}}
+2021-08-16 10:59:24,048 226164   1629125964	pi3-r1-m2-l5-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4580, sys-ms=1260}
+2021-08-16 10:59:24,228 226344   1629125964	pi3-r1-m2-l4-p4.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fe40:483d:58182=74}, messageBytes={2-4=31501}}
+2021-08-16 10:59:24,228 226344   1629125964	pi3-r1-m2-l4-p4.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4180, sys-ms=2210}
+2021-08-16 10:59:25,329 227445   1629125965	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_inRate.count     	324
+2021-08-16 10:59:25,330 227446   1629125965	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_inRate.mean_rate 	1.7999099603341927E-6
+2021-08-16 10:59:25,330 227446   1629125965	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_outRate.count    	324
+2021-08-16 10:59:25,331 227447   1629125965	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_outRate.mean_rate	1.799911708081025E-6
+2021-08-16 10:59:25,618 227734   1629125965	pi3-r1-m2-l5-p3.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:45834=54, /fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:53270=38}, messageBytes={5-8=3035, 7-8=4320}}
+2021-08-16 10:59:25,620 227736   1629125965	pi3-r1-m2-l5-p3.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4440, sys-ms=2250}
+2021-08-16 11:00:01,887 264003   1629126001	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_inRate.count     	30
+2021-08-16 11:00:01,889 264005   1629126001	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_inRate.mean_rate 	1.2499490432231926E-7
+2021-08-16 11:00:01,889 264005   1629126001	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_outRate.count    	30
+2021-08-16 11:00:01,890 264006   1629126001	pi3-r1-m2-l5-p1.pi3lan.local:6700	  3:v1         	tuple_outRate.mean_rate	1.2499496095783124E-7
+2021-08-16 11:00:01,942 264058   1629126001	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_inRate.count     	156
+2021-08-16 11:00:01,943 264059   1629126001	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_inRate.mean_rate 	6.49981672445116E-7
+2021-08-16 11:00:01,943 264059   1629126001	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_outRate.count    	0
+2021-08-16 11:00:01,944 264060   1629126001	pi3-r1-m2-l1-p2.pi3lan.local:6700	  6:v4         	tuple_outRate.mean_rate	0.0
+2021-08-16 11:00:02,121 264237   1629126002	pi3-r1-m2-l5-p1.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:35832=7}, messageBytes={7-3=560}}
+2021-08-16 11:00:02,122 264238   1629126002	pi3-r1-m2-l5-p1.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3450, sys-ms=2180}
+2021-08-16 11:00:02,186 264302   1629126002	pi3-r1-m2-l1-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fe3b:89c9:34584=7, /fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:38494=29}, messageBytes={9-6=9085, 3-6=1421}}
+2021-08-16 11:00:02,186 264302   1629126002	pi3-r1-m2-l1-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3840, sys-ms=2450}
+2021-08-16 11:00:02,208 264324   1629126002	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_inRate.count     	445
+2021-08-16 11:00:02,209 264325   1629126002	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_inRate.mean_rate 	1.8541042794336785E-6
+2021-08-16 11:00:02,209 264325   1629126002	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_outRate.count    	445
+2021-08-16 11:00:02,210 264326   1629126002	pi3-r1-m2-l2-p2.pi3lan.local:6700	  9:v7         	tuple_outRate.mean_rate	1.8541060111567761E-6
+2021-08-16 11:00:02,442 264558   1629126002	pi3-r1-m2-l2-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:40708=15, /fd65:aeb8:64e2:a7c:ba27:ebff:fe68:e899:55262=98}, messageBytes={5-9=1200, 8-9=19888}}
+2021-08-16 11:00:02,443 264559   1629126002	pi3-r1-m2-l2-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4280, sys-ms=2130}
+2021-08-16 11:00:02,452 264568   1629126002	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_inRate.count     	319
+2021-08-16 11:00:02,452 264568   1629126002	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_inRate.mean_rate 	1.3291140331473148E-6
+2021-08-16 11:00:02,452 264568   1629126002	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_outRate.count    	319
+2021-08-16 11:00:02,453 264569   1629126002	pi3-r1-m2-l1-p4.pi3lan.local:6700	  2:v0         	tuple_outRate.mean_rate	1.3291152001030144E-6
+2021-08-16 11:00:02,681 264797   1629126002	pi3-r1-m2-l1-p4.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:33246=85}, messageBytes={9-2=26225}}
+2021-08-16 11:00:02,682 264798   1629126002	pi3-r1-m2-l1-p4.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3770, sys-ms=2320}
+2021-08-16 11:00:02,731 264847   1629126002	pi3-r1-m2-l2-p3.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 11:00:02,732 264848   1629126002	pi3-r1-m2-l2-p3.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=1980, sys-ms=1180}
+2021-08-16 11:00:03,438 265554   1629126003	pi3-r1-m2-l2-p1.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 11:00:03,439 265555   1629126003	pi3-r1-m2-l2-p1.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=2890, sys-ms=1240}
+2021-08-16 11:00:03,773 265889   1629126003	pi3-r1-m2-l3-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={}, messageBytes={}}
+2021-08-16 11:00:03,776 265892   1629126003	pi3-r1-m2-l3-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=2850, sys-ms=1230}
+2021-08-16 11:00:06,720 268836   1629126006	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_inRate.count     	243
+2021-08-16 11:00:06,721 268837   1629126006	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_inRate.mean_rate 	9.977189456603935E-7
+2021-08-16 11:00:06,721 268837   1629126006	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_outRate.count    	243
+2021-08-16 11:00:06,722 268838   1629126006	pi3-r1-m2-l2-p1.pi3lan.local:6700	  5:v3         	tuple_outRate.mean_rate	9.97719918356718E-7
+2021-08-16 11:00:07,105 269221   1629126007	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_inRate.count     	243
+2021-08-16 11:00:07,106 269222   1629126007	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_inRate.mean_rate 	9.976791615452043E-7
+2021-08-16 11:00:07,106 269222   1629126007	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_outRate.count    	243
+2021-08-16 11:00:07,107 269223   1629126007	pi3-r1-m2-l3-p2.pi3lan.local:6700	  7:v5         	tuple_outRate.mean_rate	9.976799978357479E-7
+2021-08-16 11:00:23,948 286064   1629126023	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_inRate.count     	349
+2021-08-16 11:00:23,948 286064   1629126023	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_inRate.mean_rate 	1.4540355818571598E-6
+2021-08-16 11:00:23,949 286065   1629126023	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_outRate.count    	0
+2021-08-16 11:00:23,949 286065   1629126023	pi3-r1-m2-l4-p4.pi3lan.local:6700	  4:v2         	tuple_outRate.mean_rate	0.0
+2021-08-16 11:00:24,042 286158   1629126024	pi3-r1-m2-l5-p2.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:55596=2, /fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:55348=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fefc:80f1:33828=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fefb:438:50224=2, /fd65:aeb8:64e2:a7c:ba27:ebff:feff:aca5:47962=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe40:483d:55400=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe08:be9c:55724=1, /fd65:aeb8:64e2:a7c:ba27:ebff:fe3b:89c9:35942=2, /fd65:aeb8:64e2:a7c:ba27:ebff:fe68:e899:42358=2}, messageBytes={2-1=855, 3-1=849, 4-1=817, 5-1=1076, 6-1=839, 7-1=1100, 8-1=900, -1-1=40540, 9-1=886}}
+2021-08-16 11:00:24,042 286158   1629126024	pi3-r1-m2-l5-p2.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=3230, sys-ms=1270}
+2021-08-16 11:00:24,223 286339   1629126024	pi3-r1-m2-l4-p4.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:fe40:483d:58182=86}, messageBytes={2-4=36880}}
+2021-08-16 11:00:24,224 286340   1629126024	pi3-r1-m2-l4-p4.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4200, sys-ms=2170}
+2021-08-16 11:00:25,325 287441   1629126025	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_inRate.count     	416
+2021-08-16 11:00:25,326 287442   1629126025	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_inRate.mean_rate 	1.7332789268488947E-6
+2021-08-16 11:00:25,327 287443   1629126025	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_outRate.count    	416
+2021-08-16 11:00:25,328 287444   1629126025	pi3-r1-m2-l5-p3.pi3lan.local:6700	  8:v6         	tuple_outRate.mean_rate	1.73328071198533E-6
+2021-08-16 11:00:25,612 287728   1629126025	pi3-r1-m2-l5-p3.pi3lan.local:6700	 -1:__system   	__recv-iconnection     	{dequeuedMessages=0, enqueued={/fd65:aeb8:64e2:a7c:ba27:ebff:febd:ecf0:45834=50, /fd65:aeb8:64e2:a7c:ba27:ebff:fea1:1d8e:53270=42}, messageBytes={5-8=3360, 7-8=3995}}
+2021-08-16 11:00:25,612 287728   1629126025	pi3-r1-m2-l5-p3.pi3lan.local:6700	 -1:__system   	CPU                    	{user-ms=4270, sys-ms=2270}

@@ -1,0 +1,8 @@
+pi3-r1-m2-l5-p4.pi3lan.local v0
+pi3-r1-m2-l1-p4.pi3lan.local v1
+pi3-r1-m2-l2-p2.pi3lan.local v2
+pi3-r1-m2-l4-p4.pi3lan.local v3
+pi3-r1-m2-l1-p3.pi3lan.local v4
+pi3-r1-m2-l3-p3.pi3lan.local v5
+pi3-r1-m2-l5-p3.pi3lan.local v6
+pi3-r1-m2-l1-p2.pi3lan.local v7

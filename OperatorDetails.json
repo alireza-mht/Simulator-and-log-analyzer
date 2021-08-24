@@ -1,0 +1,3 @@
+
+[{"name":"v3","inRate":1,"outRate":1,"probabilityRatio":{"v6":0.7311469360199058,"v7":0.9014476240300544}},{"name":"v5","inRate":1,"outRate":1,"probabilityRatio":{"v6":0.8571240443456863,"v1":0.9858769332362016,"v2":0.49682259343089075}},{"name":"v6","inRate":1,"outRate":1,"probabilityRatio":{"v7":1.0}},{"name":"v7","inRate":1,"outRate":1,"probabilityRatio":{"v0":0.7531163756803056,"v4":0.24688362431969432}},{"name":"v0","inRate":1,"outRate":1,"probabilityRatio":{"v2":1.0}},
+  {"name":"v1","inRate":1,"outRate":1,"probabilityRatio":{"v4":1.0}},{"name":"v2","inRate":1,"outRate":1,"probabilityRatio":{}},{"name":"v4","inRate":1,"outRate":1,"probabilityRatio":{}}]
