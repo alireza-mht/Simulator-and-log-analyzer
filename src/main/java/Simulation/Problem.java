@@ -10,6 +10,7 @@ import org.jgrapht.nio.dot.DOTImporter;
 import org.jgrapht.traverse.TopologicalOrderIterator;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -20,6 +21,8 @@ public class Problem {
     private EdgeNetwork edgeNetwork;
     private Topology topology;
     private Map<Operator, List<EdgeNode>> operatorsAvailableEdgeNodes;
+    Map<String, Integer> edgeNodesOrder;
+    List<Integer> serverDeployment;
     Properties mainProperties;
     private final int EDGE_SIZE;
     private final int OPERATOR_SIZE;
@@ -31,19 +34,21 @@ public class Problem {
     private final String DOT_FILE_PATH;
     private final String JSON_FILE_PATH;
     private final String RESULT_FILE_PATH;
+    private final String BANDWIDTH_PATH;
+    private final String PI_LIST_PATH;
+    private final String THREAD_LIST_PATH;
     private int TEST_BED_INSTRUCTION_SIZE;
 
-    public Problem() throws IOException {
+    public Problem(String propertyPath) throws IOException {
 
         this.mainProperties = new Properties();
 
         FileInputStream file;
 
         //the base folder is ./, the root of the main.properties file
-        String path = "./simulator.properties";
 
         //load the file handle for main.properties
-        file = new FileInputStream(path);
+        file = new FileInputStream(propertyPath);
 
         //load all the properties from this file
         mainProperties.load(file);
@@ -57,14 +62,18 @@ public class Problem {
         ITERATION_NUMBER = Integer.parseInt(mainProperties.getProperty("iteration.number"));//100
         POPULATION_NUMBER = Integer.parseInt(mainProperties.getProperty("population.number")); //100
         JSON_FILE_PATH = mainProperties.getProperty("json.file.path");
-        DOT_FILE_PATH =mainProperties.getProperty("dot.file.path");
+        DOT_FILE_PATH = mainProperties.getProperty("dot.file.path");
         RESULT_FILE_PATH = mainProperties.getProperty("result.file.path"); //
         TEST_BED_INSTRUCTION_SIZE = Integer.parseInt(mainProperties.getProperty("testbed.instruction.size")); //2451
+        BANDWIDTH_PATH = mainProperties.getProperty("bandwidth.path");
+        PI_LIST_PATH = mainProperties.getProperty("pi.list.path");
+        THREAD_LIST_PATH = mainProperties.getProperty("thread.list.path");
+
 
         this.edgeNetwork = this.generateEdgeNetwork();
         this.topology = this.generateTopology();
         this.operatorsAvailableEdgeNodes = new HashMap<>();
-        this.calculateAvalibleEdgeNodes();
+        this.calculateAvailableEdgeNodes();
     }
 
     public void solve() {
@@ -76,23 +85,41 @@ public class Problem {
             @Override
             public double eval(List<Integer> args) throws DimensionsUnmatchedException {
 
-
+                args = serverDeployment;
                 //check if the results contains one resource
                 int test = isValid(args);
                 if (test == -1)
                     return Double.POSITIVE_INFINITY;
 
                 Topology finalTopology = topology;
-                topology.getOperators().forEach(operator -> {
-
-                    int edgeNodeIndex = args.get(finalTopology.getOperators().indexOf(operator));
-
-                    operator.setAssignedEdgeNode(operatorsAvailableEdgeNodes.get(operator).get(edgeNodeIndex - 1));
-                    operatorsAvailableEdgeNodes.get(operator).get(edgeNodeIndex - 1).setPlacedOperator(operator);
-                });
+                for (int index = 0; index < finalTopology.getOperators().size(); index++) {
+                    Operator o = finalTopology.getOperators().get(index);
+                    EdgeNode e = operatorsAvailableEdgeNodes.get(o).get(args.get(index) - 1);
+                    o.setAssignedEdgeNode(e);
+                    e.setPlacedOperator(o);
+                }
+//                topology.getOperators().forEach(operator -> {
+//
+//                    int edgeNodeIndex = args.get(finalTopology.getOperators().indexOf(operator));
+//
+//                    operator.setAssignedEdgeNode(operatorsAvailableEdgeNodes.get(operator).get(edgeNodeIndex - 1));
+//                    operatorsAvailableEdgeNodes.get(operator).get(edgeNodeIndex - 1).setPlacedOperator(operator);
+//                });
 
                 List<Double> finishTime = new ArrayList<>();
+                List<Integer> running = new ArrayList<>();
+//                for (int)
+//                running.stream().forEach(a -> {
+//                    pushData(topology);
+//                    finishTime.add(topology.finishTime());
+////                    ConcurrentPushData concurrentPushData = new ConcurrentPushData();
+////                    finishTime.add(concurrentPushData.pushData(topology, INPUT_DATA_RATE));
+//                    topology.localResetTopology();
+//                    edgeNetwork.localRestEdgeNetwork();
+//                });
                 for (int i = 0; i < TIMES_OF_RUNS_PER_ASSIGNMENT; i++) {
+//                ConcurrentPushData concurrentPushData = new ConcurrentPushData();
+//                finishTime.add(concurrentPushData.pushData(topology, INPUT_DATA_RATE));
                     pushData(topology);
                     finishTime.add(topology.finishTime());
                     topology.localResetTopology();
@@ -101,7 +128,6 @@ public class Problem {
                 topology.resetTopology();
                 edgeNetwork.restEdgeNetwork();
                 return finishTime.stream().mapToDouble(v -> v).average().orElseThrow();
-
             }
         };
         List<Integer> low = new ArrayList<>(Collections.nCopies(topology.getOperators().size(), 1));
@@ -122,7 +148,7 @@ public class Problem {
 
         WolfPack pack = new WolfPack();
 
-        System.out.println("Minimum:");
+//        System.out.println("Minimum:");
         WolfPackSolution solution = pack.findMinimum(function, params);
 
 //        while (solution == null) {
@@ -142,8 +168,8 @@ public class Problem {
             fileWriter = new FileWriter(this.RESULT_FILE_PATH);
             int q = 0;
             for (Operator operator : topology.getOperators()) {
-                fileWriter.write(  operatorsAvailableEdgeNodes.get(operator).
-                        get(solutionsInteger.get(q) - 1).getName()+ " "+ "v" + operator.getId() + "\n");
+                fileWriter.write(operatorsAvailableEdgeNodes.get(operator).
+                        get(solutionsInteger.get(q) - 1).getName() + " " + "v" + operator.getId() + "\n");
                 q++;
             }
             fileWriter.close();
@@ -155,47 +181,108 @@ public class Problem {
         System.out.println(solution);
 
 
-        int q = 0;
-        for (Operator operator : topology.getOperators()) {
-            System.out.print(operatorsAvailableEdgeNodes.get(operator).get(solutionsInteger.get(q) - 1).getId() + ", ");
-            q++;
-
-        }
+//        int q = 0;
+//        for (Operator operator : topology.getOperators()) {
+//            System.out.print(operatorsAvailableEdgeNodes.get(operator).get(solutionsInteger.get(q) - 1).getId() + ", ");
+//            q++;
+//
+//        }
 
     }
 
     public void pushData(Topology topology) {
+//        BigDecimal updateTopologyTime;
+//        if (INPUT_DATA_RATE.size() == 1) {
+//            updateTopologyTime = BigDecimal.valueOf(1 / INPUT_DATA_RATE.entrySet().stream().
+//                    max(Map.Entry.comparingByValue()).get().getValue());
+//        } else {
+//            ArrayList<Double> dataRateValues = new ArrayList<Double>(this.INPUT_DATA_RATE.values());
+//            updateTopologyTime = gcd(BigDecimal.valueOf(dataRateValues.get(0)), BigDecimal.valueOf(dataRateValues.get(1)));
+//            for (int i = 2; i < dataRateValues.size(); i++) {
+//                updateTopologyTime = gcd(updateTopologyTime, BigDecimal.valueOf(dataRateValues.get(i)));
+//            }
+//
+//        }
 
+        //the id list of finished operator, it contains unique values. we continue running the simulation until
+        // all the sinks to receive the message.
         final List<Integer> finish = new ArrayList<>();
-        int time = 0;
-        double sum = 0;
+//        BigDecimal time = new BigDecimal(0);
+        Map<Integer,Double> sendingTimes = new HashMap<>();
+        Map<Operator, Double> messageSendTime = new HashMap<>();
+        for (Operator operator : topology.getSource()) {
+            messageSendTime.put(operator, 0.0);
+        }
+        Map<Operator, Double> tempMessageSendTime;
         int numberOfMessage = 0;
         do {
-            time += 1;
-            int i = 0;
-            for (Operator operator : topology.getSource()) {
-
-                sum += INPUT_DATA_RATE.get(operator);
-                numberOfMessage++;
-                Event event = new Event(null, operator, (int) Math.floor(sum), 0, time,
-                        time);
-                if (sum > 1) {
-                    sum -= 1;
-                    numberOfMessage = 0;
-                }
-                List<Integer> temp = operator.receiveEvent(event);
-                temp = temp.stream().filter(o -> o != -1).collect(Collectors.toList());
-
-                if (temp.size() != 0)
-                    temp.stream().filter(o -> topology.getOperatorById(o).getType() == Operator.OperatorType.SINK &&
-                            !finish.contains(o)).forEach(finish::add);
-                i++;
-
+            tempMessageSendTime = messageSendTime;
+            for (Map.Entry<Operator, Double> map : messageSendTime.entrySet()) {
+                tempMessageSendTime.put(map.getKey(), map.getValue() + ((1 / INPUT_DATA_RATE.get(map.getKey()))));
             }
 
+            Operator operator = tempMessageSendTime.entrySet().stream()
+                    .min((e1, e2) -> e1.getValue() <= e2.getValue() ? -1 : 1).get().getKey();
+//            Operator operator = get
+//            for (Operator operator : topology.getSource()) {
+            double time = messageSendTime.get(operator);
+//                double value = time.doubleValue() % (1 / INPUT_DATA_RATE.get(operator));
+//                if ((1 / INPUT_DATA_RATE.get(operator) - value) < 1.469446951953614E-17) {
 
+            Event event = new Event(null, operator, "id: " + numberOfMessage , 1, 0, time,
+                    time);
+            sendingTimes.put(numberOfMessage,time);
+
+            List<Integer> temp = operator.receiveEvent(event);
+            //we recive id or -1, if it is id it means that the mentioned operator is finished
+            temp = temp.stream().filter(o -> o != -1).collect(Collectors.toList());
+
+            if (temp.size() != 0)
+                temp.stream().filter(o -> topology.getOperatorById(o).getType() == Operator.OperatorType.SINK &&
+                        !finish.contains(o)).forEach(finish::add);
+            time = messageSendTime.get(operator) + ((1 / INPUT_DATA_RATE.get(operator)));
+            messageSendTime.put(operator, time);
+
+            numberOfMessage++;
+
+//                }
+//            }
+//            time = time.add(updateTopologyBig);
+//
+//            time += 1;
+//            int i = 0;
+//            for (Operator operator : topology.getSource()) {
+//                if (INPUT_DATA_RATE.get(operator) <= 1) {
+//                    sum += INPUT_DATA_RATE.get(operator);
+//                    numberOfMessage++;
+//                    Event event = new Event(null, operator, (int) Math.floor(sum), 0, time,
+//                            time);
+//                    if (sum > 1) {
+//                        sum -= 1;
+//                        numberOfMessage = 0;
+//                    }
+//                    List<Integer> temp = operator.receiveEvent(event);
+//                    temp = temp.stream().filter(o -> o != -1).collect(Collectors.toList());
+//
+//                    if (temp.size() != 0)
+//                        temp.stream().filter(o -> topology.getOperatorById(o).getType() == Operator.OperatorType.SINK &&
+//                                !finish.contains(o)).forEach(finish::add);
+//                }else if (INPUT_DATA_RATE.get(operator)>1){
+//                    int splittedTime = 0;
+//                    double timePerMessage = 1/INPUT_DATA_RATE.get(operator);
+//                    sum +=timePerMessage;
+//                    numberOfMessage++;
+//                    Event event = new Event(null, operator, 1, 0, sum,
+//                            time);
+//                }
+//                i++;
+//
+//            }
+
+//      } while (time.doubleValue() < 2);
         } while (!(finish.size() == topology.getSinks().size()));
-
+        topology.setSendTimes(sendingTimes);
+//        System.out.println("hi");
     }
 
     //second constraint on the number of threads on teach edge node
@@ -204,8 +291,10 @@ public class Problem {
         // args give us the id of edge node
         for (Operator operator : topology.getOperators()) {
 
-            int id = args.get(topology.getOperators().indexOf(operator));
-            edgeNodesIDs.add(operatorsAvailableEdgeNodes.get(operator).get(id - 1).getId());
+            int EdgeNodeIndex = args.get(topology.getOperators().indexOf(operator));
+            if (operatorsAvailableEdgeNodes.get(operator).get(EdgeNodeIndex - 1) == null)
+                return -1;
+            edgeNodesIDs.add(operatorsAvailableEdgeNodes.get(operator).get(EdgeNodeIndex - 1).getId());
         }
 
         Map<Integer, Integer> repetitive = new HashMap<>();
@@ -237,36 +326,39 @@ public class Problem {
 
     public EdgeNetwork generateEdgeNetwork() {
 
-        List<EdgeNode> edgeNodes = generateEdgeNodes(EDGE_SIZE) ;
-        return new EdgeNetwork(edgeNodes, generateBandwidth(edgeNodes), generateLatency(edgeNodes));
+        List<EdgeNode> edgeNodes = generateEdgeNodes(EDGE_SIZE);
+//        return new EdgeNetwork(edgeNodes, generateBandwidth(edgeNodes), generateLatency(edgeNodes));
+        return new EdgeNetwork(edgeNodes);
     }
 
     public List<EdgeNode> generateEdgeNodes(int size) {
         Map<Pair<EdgeNode, EdgeNode>, Double> latency = new HashMap<>();
 
         List<EdgeNode> edgeNodes = new ArrayList<>();
-        String bandwidthPath = "Bandwidth.txt";
-        String hostPath = "pi3-test.txt";
-        String threadPath = "thread.txt";
-
+        String bandwidthPath = BANDWIDTH_PATH;
+        String hostPath = PI_LIST_PATH;
+        String threadPath = THREAD_LIST_PATH;
+        this.edgeNodesOrder = new HashMap<>();
         try {
             int i = 0;
-            while(i<size) {
+            while (i < size) {
                 String line = Files.readAllLines(Path.of("./").resolve(bandwidthPath)).get(i);
                 String name = Files.readAllLines(Path.of("./").resolve(hostPath)).get(i);
 
                 //in byte per second
-                double inBand = Double.parseDouble(line.split("\t")[0])*1000000/8;
+                double inBand = Double.parseDouble(line.split(" ")[0]) * 1000000 / 8;
                 //latency in second
-                double inLatency = Double.parseDouble(line.split("\t")[1])/1000;
-                double outBand = Double.parseDouble(line.split("\t")[2])*1000000/8;
-                double outLatency = Double.parseDouble(line.split("\t")[3])/1000;
+                double inLatency = Double.parseDouble(line.split(" ")[1]) / 1000;
+                double outBand = Double.parseDouble(line.split(" ")[2]) * 1000000 / 8;
+                double outLatency = Double.parseDouble(line.split(" ")[3]) / 1000;
 
                 int thread = Integer.parseInt(Files.readAllLines(Path.of("./").resolve(threadPath)).get(i));
 
-                EdgeNode edgeNode = new EdgeNode(i, name,thread, TEST_BED_INSTRUCTION_SIZE,inBand,outBand, inLatency,outLatency);
+                EdgeNode edgeNode = new EdgeNode(i, name, thread, TEST_BED_INSTRUCTION_SIZE, inBand, outBand, inLatency, outLatency);
                 edgeNodes.add(edgeNode);
-                i+=1;
+
+                i += 1;
+                edgeNodesOrder.put(name, i);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -282,6 +374,7 @@ public class Problem {
 
         return edgeNodes;
     }
+
     public static Map<Pair<EdgeNode, EdgeNode>, Double> generateBandwidth(List<EdgeNode> edgeNodes) {
         Map<Pair<EdgeNode, EdgeNode>, Double> bandwidth = new HashMap<>();
         for (EdgeNode i : edgeNodes) {
@@ -317,6 +410,8 @@ public class Problem {
         LogAnalysis logAnalysis = new LogAnalysis(this.mainProperties);
         Map<String, Double> instructionsSize = logAnalysis.instructionSize(TEST_BED_INSTRUCTION_SIZE);
         List<Map<String, Double>> messageSizes = logAnalysis.messageSizes();
+        this.serverDeployment = logAnalysis.getDeployment(this.edgeNodesOrder);
+
 
         //Reading the probability ratio from json file
         // create a reader
@@ -449,53 +544,42 @@ public class Problem {
                     probabilityRatio.put(downstream, entry.getValue());
             }
 
-
-//            for (String vertexId : infoSave.getProbabilityRatio().keySet()) {
-//                Operator temp = operatorList.stream().filter(v -> v.getId() ==
-//                        (Integer.parseInt(vertexId.replace("v", "")))).findFirst().orElseThrow();
-//                if (infoSave.getProbabilityRatio().keySet().size() == 1)
-//                    probabilityRatio.put(temp, 1.00);
-//                else
-//                    probabilityRatio.put(temp, infoSave.getProbabilityRatio().get("v" + temp.getId()));
-//            }
-
-//            List<Integer> downStreamIntegerId = child.get(operator.getId());
-//            List<Operator> downstreams;
-//            if (downStreamIntegerId != null)
-//                downstreams = operators.stream().filter(v -> downStreamIntegerId.contains(v.getId())).
-//                        collect(Collectors.toList());
-//            else
-//                downstreams = new ArrayList<>();
-
             List<Integer> upStreamIntegerId = father.get(operator.getId());
             List<Operator> upstreams = new ArrayList<>();
             if (upStreamIntegerId != null)
                 for (Integer id : upStreamIntegerId) {
                     upstreams.add(operators.get(id));
                 }
-//            if (upStreamIntegerId != null)
-//                upstreams = operators.stream().filter(v -> upStreamIntegerId.contains(v.getId())).
-//                        collect(Collectors.toList());
-//            else
-//                upstreams = new ArrayList<>();
-
             operator.addProperties(downstreams, upstreams, probabilityRatio);
         }
+        Map<String, Double> outputDataRate = logAnalysis.outputRate();
+        Map<String, Double> inputDatRate = logAnalysis.inputRate();
+        for (Map.Entry<Integer, Operator> operatorMap : operators.entrySet()) {
+            Operator o = operatorMap.getValue();
+            Double outgoingDataRate = outputDataRate.get(o.getName());
+            o.setOutgoingDataRate(outgoingDataRate);
 
-        Map<String, Double> inputDatRate = logAnalysis.inputRate(spouts);
-        inputDatRate.forEach((k, v) -> INPUT_DATA_RATE.
-                put(operators.get(Integer.parseInt(k.replace("v", ""))), v));
+            Double incomingDataRate = inputDatRate.get(o.getName());
+            o.setIncomingDataRate(incomingDataRate);
 
+            if (Operator.OperatorType.SOURCE == o.getOperatorType())
+                INPUT_DATA_RATE.put(o, o.getIncomingDataRate());
+
+        }
+//        inputDatRate.forEach((k, v) -> INPUT_DATA_RATE.
+//                put(operators.get(Integer.parseInt(k.replace("v", ""))),100.0));
         return new ArrayList<>(operators.values());
     }
 
-    public void calculateAvalibleEdgeNodes() {
+    public void calculateAvailableEdgeNodes() {
 
         for (Operator operator : topology.getOperators()) {
             for (EdgeNode edgeNode : edgeNetwork.getEdgeNodes()) {
 
-                if (!(((operator.getOutgoingDataRate() * operator.getOutgoingMessageSize())
-                        > edgeNode.getOutgoingBandwidth())
+                if ((((operator.getOutgoingDataRate() * operator.getOutgoingMessageSize())
+                        < edgeNode.getOutgoingBandwidth()) &&
+                        (operator.getIncomingDataRate() * operator.getIncomingMessageSize()
+                                < edgeNode.getIncomingBandwidth())
 //                        || ((1 / operator.getIncomingDataRate())
 //                        < (operator.getInstructionSize() / (double) edgeNode.getMIPS()))
                 )) {
@@ -505,16 +589,66 @@ public class Problem {
 //                        this.operatorsAvailableEdgeNodes.get(operator).add(edgeNode);
 //                    } else
 //                        this.operatorsAvailableEdgeNodes.get(operator).add(edgeNode);
-                }
+                } else
+                    this.operatorsAvailableEdgeNodes.computeIfAbsent(operator, v -> new ArrayList<>()).add(null);
 
             }
         }
     }
 
-    public static void printTimeInterval(Topology topology) {
-        topology.getOperators().forEach(operator -> operator.getRunningIntervals().
-                forEach(doubleDoublePair -> System.out.println("Simulation.Operator" + operator.getId() + ":" + doubleDoublePair.getKey()
-                        + "-" + doubleDoublePair.getValue())));
+    public void runTest() {
+
+
+        //check if the results contains one resource
+        int test = isValid(serverDeployment);
+        if (test == -1)
+            System.out.println(Double.POSITIVE_INFINITY);
+
+        Topology finalTopology = topology;
+        for (int index = 0; index < finalTopology.getOperators().size(); index++) {
+            Operator o = finalTopology.getOperators().get(index);
+            EdgeNode e = operatorsAvailableEdgeNodes.get(o).get(serverDeployment.get(index) - 1);
+            o.setAssignedEdgeNode(e);
+            e.setPlacedOperator(o);
+        }
+//                topology.getOperators().forEach(operator -> {
+//
+//                    int edgeNodeIndex = args.get(finalTopology.getOperators().indexOf(operator));
+//
+//                    operator.setAssignedEdgeNode(operatorsAvailableEdgeNodes.get(operator).get(edgeNodeIndex - 1));
+//                    operatorsAvailableEdgeNodes.get(operator).get(edgeNodeIndex - 1).setPlacedOperator(operator);
+//                });
+
+        List<Double> finishTime = new ArrayList<>();
+        for (int i = 0; i < TIMES_OF_RUNS_PER_ASSIGNMENT; i++) {
+            pushData(topology);
+            finishTime.add(topology.finishTime());
+            topology.localResetTopology();
+            edgeNetwork.localRestEdgeNetwork();
+        }
+        topology.resetTopology();
+        edgeNetwork.restEdgeNetwork();
+        System.out.println(finishTime.stream().mapToDouble(v -> v).average().orElseThrow());
     }
 
+    public static double gcd(double a, double b) {
+        if (a < b)
+            return gcd(b, a);
+
+        // base case
+        if (Math.abs(b) < 0.001)
+            return a;
+
+        else
+            return (gcd(b, (a - (Math.floor(a / b)))*(b))
+            );
+    }
+
+    public EdgeNetwork getEdgeNetwork() {
+        return edgeNetwork;
+    }
+
+    public Topology getTopology() {
+        return topology;
+    }
 }

@@ -92,8 +92,6 @@ public class LogAnalysis {
                             inRate.get(this.edgeOperTaskNames.getOperatorFromTask(map.getKey())));
 
                 }
-
-
             } else { // since it is not sink we can calculate based on the outgoing message
                 perMin.add(Double.valueOf(map.getValue().get(0)) /
                         outRate.get(this.edgeOperTaskNames.getOperatorFromTask(map.getKey())));
@@ -207,20 +205,24 @@ public class LogAnalysis {
                 List<Double> numberOfRuns = this.numberOfRunsPerMin.get(this.edgeOperTaskNames.
                         getTaskFromEdge(cpu.getKey()));
 
-                //the first cpu is huge, so we check from the seconde list
-                for (int i = 1; i < numberOfRuns.size(); i++) {
+                //the first cpu is huge, so we check from the second
+                for (int i = 3; i < Math.min(numberOfRuns.size(),cpu.getValue().size()); i++) {
                     //if the operator have been run for one time
                     if (numberOfRuns.get(i) != 0) {
                         //Todo: outRate is set one for the sink. Because we used inRate for the sink. so we do not need
                         // to divide this by the outRate.
                         //remove 10000
                         //averageCPU.add((cpu.getValue().get(i) +10000) / numberOfRuns.get(i));
-                        averageCPU.add((cpu.getValue().get(i) - 3000) / numberOfRuns.get(i));
+                        averageCPU.add((cpu.getValue().get(i)-3000) / numberOfRuns.get(i));
                     }
                 }
+
+                //if it has been run
+                if (averageCPU.size()!=0)
                 // in second (divide by 1000 = ms to second)
-                instructionSize.put(this.edgeOperTaskNames.getOperatorFromEdge(cpu.getKey()), averageCPU.stream()
+                    instructionSize.put(this.edgeOperTaskNames.getOperatorFromEdge(cpu.getKey()), averageCPU.stream()
                         .mapToDouble(t -> t).average().orElseThrow() * testBedInstSize / 1000);
+                else instructionSize.put(this.edgeOperTaskNames.getOperatorFromEdge(cpu.getKey()),0.0); // if the operator never runs
             }
         }
         return instructionSize;
@@ -273,13 +275,12 @@ public class LogAnalysis {
         Map<String, Double> outMessageSizeUpdated = new HashMap<>();
 
         List<String> taskId = this.edgeOperTaskNames.getTasksName();
-
-        this.metricsMap.get(LOG_INFO[3]).entrySet().stream().filter(map ->
+//Map <String,Double> sourceAndSink =
+         this.metricsMap.get(LOG_INFO[3]).entrySet().stream().filter(map ->
                 taskId.contains(map.getKey().split("-")[0])
                         && taskId.contains(map.getKey().split("-")[1])).
                 collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).
                 forEach((k, v) -> messageSizeSum.put(k, v.stream().mapToDouble(t -> t).sum()));
-
         messageSizeSum.forEach((k, v) ->
         {
             inMessageSize.put(k.split("-")[1],
@@ -289,38 +290,77 @@ public class LogAnalysis {
         });
 
         //update the values
-
         inMessageSize.forEach((k, v) -> inMessageSizeUpdated.
                 put(this.edgeOperTaskNames.getOperatorFromTask(k), v / totalBoltIncomingTupleMap.get(k)));
         outMessageSize.forEach((k, v) -> outMessageSizeUpdated.
                 put(this.edgeOperTaskNames.getOperatorFromTask(k), v / totalBoltOutgoingTupleMap.get(k)));
 
-
         List<Map<String, Double>> result = new ArrayList<>();
+        //check if there is an unused operator that was never run
+        if (this.edgeOperTaskNames.getEdgeTaskBoltNames().size()!=inMessageSize.size()){
+            for (EdgeOperTaskNames.EdgeOperTaskName edgeOperTaskName : this.edgeOperTaskNames.getEdgeTaskBoltNames()){
+                if (!inMessageSizeUpdated.containsKey(edgeOperTaskName.operatorName)
+                        && !outMessageSizeUpdated.containsKey(edgeOperTaskName.operatorName)) {
+                    inMessageSizeUpdated.put(edgeOperTaskName.getOperatorName(), 0.0);
+                    outMessageSizeUpdated.put(edgeOperTaskName.getOperatorName(), 0.0);
+                }
+            }
+        }
         result.add(inMessageSizeUpdated);
         result.add(outMessageSizeUpdated);
+
         return result;
 
 
     }
 
-    public Map<String, Double> inputRate(List<String> spouts) {
+    public Map<String, Double> inputRate() {
 //         return boltMeanRateMap.entrySet().stream().filter(map -> spouts.contains(map.getKey())).
 //               collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        List<String> spoutTasks = new ArrayList<>();
-        spouts.forEach(v -> spoutTasks.add(edgeOperTaskNames.getTaskFromOperator(v)));
+//        List<String> spoutTasks = new ArrayList<>();
+//        spouts.forEach(v -> spoutTasks.add(edgeOperTaskNames.getTaskFromOperator(v)));
         Map<String, Double> inputRates = new HashMap<>();
         //return spoutTasks.forEach(v -> inputRates.put(totalIncomingPerMinute.get(v).get(totalIncomingPerMinute.get(v).size())) );
-        for (String spoutTask : spoutTasks) {
-            int totalRunning = totalBoltIncomingTupleMap.get(spoutTask);
-            List<Integer> incomingPerMin = totalIncomingPerMinute.get(spoutTask);
+        for (Map.Entry<String, Integer> totalBoltIncoming : totalBoltIncomingTupleMap.entrySet()) {
+            String taskName = totalBoltIncoming.getKey();
+            int totalIncomingMessage = totalBoltIncomingTupleMap.get(taskName);
+
+            List<Integer> incomingPerMin = totalIncomingPerMinute.get(taskName);
+
             if (incomingPerMin.contains(0)) {
                 incomingPerMin.remove(Integer.valueOf(0));
             }
-            inputRates.put(edgeOperTaskNames.getOperatorFromTask(spoutTask), (double) totalRunning / (incomingPerMin.size()*60));
+            inputRates.put(edgeOperTaskNames.getOperatorFromTask(taskName), (double) totalIncomingMessage / (incomingPerMin.size() * 60));
 
         }
         return inputRates;
+    }
+
+    public Map<String, Double> outputRate() {
+        Map<String, Double> outputRates = new HashMap<>();
+        for (Map.Entry<String, Integer> totalBoltOutgoing : totalBoltOutgoingTupleMap.entrySet()) {
+            String taskName = totalBoltOutgoing.getKey();
+            int totalOutgoingMessage = totalBoltOutgoingTupleMap.get(taskName);
+            List<Integer> outgoingPerMin = totalOutgoingPerMinute.get(taskName);
+
+            if (outgoingPerMin.contains(0)) {
+                outgoingPerMin.remove(Integer.valueOf(0));
+            }
+
+            outputRates.put(edgeOperTaskNames.getOperatorFromTask(taskName), (double) totalOutgoingMessage / (outgoingPerMin.size() * 60));
+        }
+        return outputRates;
+
+    }
+
+    public ArrayList<Integer> getDeployment(Map<String, Integer> edgeNodesOrder){
+        ArrayList<Integer> arrayList = new ArrayList<>();
+//        edgeOperTaskNames.getEdgeTaskBoltNames().sort(Comparator.comparing(EdgeOperTaskNames.EdgeOperTaskName::getOperatorName));
+        Collections.sort(edgeOperTaskNames.getEdgeTaskBoltNames());
+        for (EdgeOperTaskNames.EdgeOperTaskName e : edgeOperTaskNames.getEdgeTaskBoltNames()){
+            arrayList.add(edgeNodesOrder.get(e.getEdgeName().split(":")[0]));
+        }
+        return arrayList;
     }
 
 // json -> probability ratio
