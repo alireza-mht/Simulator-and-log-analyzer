@@ -7,15 +7,16 @@ public class Event {
     private double messagesSize;
     private double sendingTime;
     private double receivingTime;
+    private String message;
 
-
-    public Event(Operator sender, Operator receiver, int numberOfMessages, double messagesSize, double sendingTime, double receivingTime) {
+    public Event(Operator sender, Operator receiver, String message, int numberOfMessages, double messagesSize, double sendingTime, double receivingTime) {
         this.sender = sender;
         this.receiver = receiver;
         this.numberOfMessages = numberOfMessages;
         this.messagesSize = messagesSize;
         this.sendingTime = sendingTime;
         this.receivingTime = receivingTime;
+        this.message = message;
     }
 
     public Operator getSender() {
@@ -48,6 +49,10 @@ public class Event {
 
     public void setSendingTime(double sendingTime) {
         this.sendingTime = sendingTime;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public double getReceivingTime() {

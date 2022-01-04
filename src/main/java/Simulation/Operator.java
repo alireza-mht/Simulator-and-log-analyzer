@@ -21,6 +21,7 @@ public class Operator {
     private final double outRate;
     private final double selectivityRatio;
 
+
     //productivity ratio
     private double incomingMessageSize;
     private double outgoingMessageSize;
@@ -42,7 +43,9 @@ public class Operator {
     private Map<Operator, Double> downstreamMessages;
     private Map<Operator, Double> upstreamMessages;
 
-
+    private String messages="";
+    private final String messageSeparator =" - ";
+    private List<String> sinkMessageSaver = new ArrayList<>();
     //Probability rate to each of downstream operator
     private Map<Operator, Double> probabilityRate;
 
@@ -65,7 +68,7 @@ public class Operator {
         this.selectivityRatio = outRate / inRate;
         this.instructionSize = instructionSize;
         this.type = type;
-        this.random = new Random(id + 2);
+        this.random = new Random(2);
     }
 
     public Operator(int id, String name, double incomingMessageSize, double outgoingMessageSize, double inRate, double outRate, int instructionSize, OperatorType type) {
@@ -78,7 +81,7 @@ public class Operator {
         this.selectivityRatio = outRate / inRate;
         this.instructionSize = instructionSize;
         this.type = type;
-        this.random = new Random(id + 2);
+        this.random = new Random(2);
     }
 
     public void addProperties(List<Operator> downstreams, List<Operator> upstreams,
@@ -92,6 +95,11 @@ public class Operator {
 
     public List<Integer> receiveEvent(Event event) {
         this.savedMessages.add(new Pair<>(event, event.getNumberOfMessages()));
+        if (this.messages.equals(""))
+            this.messages = this.messages + event.getMessage();
+        else
+            this.messages =   this.messages + this.messageSeparator + event.getMessage();
+//        this.messages =  event.getMessage() + " | " + this.messages + " _ " + this.name + " $ ";
         if (isThereMessages()) {
             return this.processEvents();
         } else {
@@ -113,6 +121,7 @@ public class Operator {
                 messages += savedMessages.peek().getValue();
             }
             assert savedMessages.peek() != null;
+            //the time when the resource is idle or the time that the message is recived
             maxReceivingTime = Math.max(maxReceivingTime, savedMessages.peek().getKey().getReceivingTime());
             Pair<Event, Integer> temp = savedMessages.remove();
             if (messages > inRate)
@@ -132,37 +141,50 @@ public class Operator {
 
         List<Integer> results = new ArrayList<>();
 
+
         //when it is not the sink
         if (!(this.type == OperatorType.SINK)) {
             //the for is for double operator so we need to send event to both of downstream operators
-            specifyEventDestination().forEach(operator -> results.addAll(this.sendEvent(operator,
-                    (int) this.outRate,
-                    finalProcessingTime)));
+            for (int i = 0; i < outRate ; i++) {
+                specifyEventDestination().forEach(operator -> results.addAll(this.sendEvent(operator,
+                        (int) this.outRate,
+                        finalProcessingTime, this.messages)));
+            }
+            this.messages ="";
             return results;
 
-        } else if ((runningIntervals.size() != 0)) { // when it is sink and it has been run for one time
+        } else { // when it is sink and it has been run for one time
+            this.sinkMessageSaver.add(this.messages + " | " + finalProcessingTime);
             results.add(id);
-            return results;
-        } else {// when it is sink and it was not beeing run
-            //we may have two results because of double value
-            //if (!results.contains(0)) return results.get(0);
-            results.add(-1);
+            this.messages ="";
             return results;
         }
+
+//    } else if ((runningIntervals.size() != 0)) { // when it is sink and it has been run for one time
+//        this.sinkMessageSaver.add(this.messages + messageSeparator + finalProcessingTime);
+//        results.add(id);
+//        return results;
+//    } else {// when it is sink and it was not beeing run
+//        //we may have two results because of double value
+//        // we recive a message but it is not enough and we need more
+//        //if (!results.contains(0)) return results.get(0);
+//        results.add(-1);
+//        return results;
+//    }
     }
 
-    public List<Integer> sendEvent(Operator receiver, int numberOfMessages, double finalProcessingTime) throws NullPointerException {
+    public List<Integer> sendEvent(Operator receiver, int numberOfMessages, double finalProcessingTime, String messages) throws NullPointerException {
 
         Event event;
         if (receiver.getAssignedEdgeNode().equals(this.assignedEdgeNode)) {
-            event = new Event(this, receiver, numberOfMessages, this.outgoingMessageSize,
+            event = new Event(this, receiver, messages, numberOfMessages, this.outgoingMessageSize,
                     finalProcessingTime, finalProcessingTime);
         } else {
-            double latency =    this.assignedEdgeNode.getEdgeNetwork().getLatencyPair(this.assignedEdgeNode, receiver.assignedEdgeNode);
-            event = new Event(this, receiver, numberOfMessages, this.outgoingMessageSize,
+            double latency = this.assignedEdgeNode.getEdgeNetwork().getLatencyPair(this.assignedEdgeNode, receiver.assignedEdgeNode);
+            event = new Event(this, receiver, messages, numberOfMessages, this.outgoingMessageSize,
                     finalProcessingTime, finalProcessingTime + latency + this.assignedEdgeNode.getEdgeNetwork().
                     propagationDelay(this.assignedEdgeNode, receiver.getAssignedEdgeNode(),
-                            numberOfMessages * outgoingMessageSize));
+                            numberOfMessages * ((receiver.getIncomingMessageSize()))));
         }
         Double empty = this.sentMessages.get(receiver);
         if (empty != null)
@@ -180,34 +202,44 @@ public class Operator {
     }
 
     public List<Operator> specifyEventDestination() {
+        //if we have on downstream, or we have a double operator
+        if (this.probabilityRate.size() == 1 ||
+                probabilityRate.values().stream().mapToDouble(v -> v).sum() == probabilityRate.size()) {
+            return new ArrayList<>(probabilityRate.keySet());
+        }
 
-//        Storm.Random random = new Storm.Random();
+        List<Operator> operators = new ArrayList<>();
+        HashMap<Operator, Double> newScale = new HashMap<>();
 
         var wrapper = new Object() {
             double value;
         };
-
-        HashMap<Operator, Double> newScale = new HashMap<>();
+//        int reRangeValue = 0;
+//        for (Map.Entry<Operator, Double> map : probabilityRate.entrySet()){
+//            if (map.getValue()+ reRangeValue > )
+//            map.setValue(map.getValue()+ reRangeValue);
+//            reRangeValue++;
+//        }
+//        int i = 0;
+//        if (this.name.equals("v3"))
+//            probabilityRate.forEach((key,value) ->System.out.println(key.getName() + "-" + value ));
+//        this.probabilityRate =probabi
         this.probabilityRate.forEach((key, value) -> {
+
             wrapper.value += value;
             newScale.put(key, wrapper.value);
         });
-
-        List<Operator> operators = new ArrayList<>();
-        double randomValue = this.random.nextDouble();
+        double randomValue = this.random.nextDouble() * Collections.max(newScale.values());
         for (Map.Entry<Operator, Double> map : newScale.entrySet()) {
-
+//            System.out.println(map.getKey().name);
             if (map.getValue() >= randomValue) {
                 operators.add(map.getKey());
-
-                //if it is not double we need to return one operator so we should break
-                //if it is a double it will go for the next operator
-                // all the doubles have the probability ratio of 1
-                if (map.getValue() != 1)
-                    break;
+//                if (this.name.equals("v3"))
+//                    System.out.println(this.name + "-" + randomValue+"-"+map.getKey().name +"-" + map.getValue());
+                return operators;
             }
         }
-        return operators;
+        return null;
     }
 
     public OperatorType getType() {
@@ -241,6 +273,7 @@ public class Operator {
         return id;
     }
 
+
     public List<Pair<Double, Double>> getRunningIntervals() {
         return runningIntervals;
     }
@@ -258,17 +291,26 @@ public class Operator {
         return outgoingMessageSize;
     }
 
+    public double getIncomingMessageSize(){
+        return incomingMessageSize;
+    }
+
     public void reset() {
         this.setAssignedEdgeNode(null);
         this.setRunningIntervals(new ArrayList<>());
         this.savedMessages = new PriorityQueue<>((a, b) -> (int) (a.getKey().getReceivingTime() - b.getKey().getReceivingTime()));
-        this.random = new Random(id);
+//        this.random = new Random(2);
+        this.sinkMessageSaver = new ArrayList<>();
+        this.messages="";
     }
 
     public void localRest() {
         this.setRunningIntervals(new ArrayList<>());
+        this.sinkMessageSaver = new ArrayList<>();
         this.savedMessages = new PriorityQueue<>((a, b) -> (int) (a.getKey().getReceivingTime() - b.getKey().getReceivingTime()));
-//        this.random = new Storm.Random(id);
+        this.messages="";
+
+//        this.random = new Random(id+2);
     }
 
     public double getIncomingDataRate() {
@@ -283,10 +325,28 @@ public class Operator {
         return instructionSize;
     }
 
+    public String getMessageSeparator() {
+        return messageSeparator;
+    }
+
+    public List<String> getSinkMessageSaver() {
+        return sinkMessageSaver;
+    }
+
+    public void setOutgoingDataRate(double outgoingDataRate) {
+        this.outgoingDataRate = outgoingDataRate;
+    }
+
     public enum OperatorType {
         SOURCE,
         TRANSFORMATION,
         SINK
     }
+
+    public OperatorType getOperatorType(){
+        return this.type;
+    }
+
+
 }
 

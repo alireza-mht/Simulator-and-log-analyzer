@@ -1,11 +1,16 @@
 package Simulation.LogAnalysis;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EdgeOperTaskNames {
 
     private List<EdgeOperTaskName> edgeTaskBoltNames;
+
+    public List<EdgeOperTaskName> getEdgeTaskBoltNames() {
+        return (edgeTaskBoltNames);
+    }
 
     public EdgeOperTaskNames() {
         this.edgeTaskBoltNames = new ArrayList<>();
@@ -71,7 +76,7 @@ public class EdgeOperTaskNames {
 
 
 
-    private static class EdgeOperTaskName {
+    public static class EdgeOperTaskName implements Comparable<EdgeOperTaskName> {
         String edgeName;
         String taskName;
         String operatorName;
@@ -106,6 +111,15 @@ public class EdgeOperTaskNames {
             this.operatorName = operatorName;
         }
 
+        @Override
+        public int compareTo(EdgeOperTaskName o) {
+            int idOne = Integer.parseInt(this.operatorName.split("v")[1]);
+            int idTwo =  Integer.parseInt(o.operatorName.split("v")[1]);
+            if (idOne > idTwo)
+                    return +1;
+            else
+                return -1;
+        }
     }
 
 }
