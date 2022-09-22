@@ -3,6 +3,7 @@ package Simulation;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public class Topology {
 
     private List<Operator> operators;
     private Map<Integer, Double> sendTimes;
+    private List<Operator> sinks;
 
     public void setSendTimes(Map<Integer, Double> sendTimes) {
         this.sendTimes = sendTimes;
@@ -18,6 +20,9 @@ public class Topology {
 
     public Topology(List<Operator> operators, Map<Operator,Double> inputDataRate, double incomingMessageSize) {
         this.operators = operators;
+        sinks = new ArrayList<>();
+        this.getOperators().stream().filter(operator -> operator.getType() == Operator.OperatorType.SINK).
+                forEach(this.sinks::add);
 
 
         //modifying all the operators in the topology
@@ -80,40 +85,33 @@ public class Topology {
 
         this.getSinks().forEach(operator -> {
           //  int s = operator.getRunningIntervals().size() - 1;
-            for (String messagesInfo: operator.getSinkMessageSaver()){
-                double finishTime =  Double.parseDouble(messagesInfo.split(" \\| ")[1]);
-                String [] messages  = messagesInfo.split(operator.getMessageSeparator());
-                for (String message: messages){
-                    String []messageArray = message.split(" ");
+            for (Map.Entry<List<Integer>,Double> messagesInfo: operator.getSinkMessageSaver().entrySet()){
+                double finishTime =  messagesInfo.getValue();
+                for (Integer message: messagesInfo.getKey()){
 //                    double startTime = Double.parseDouble(messageArray[messageArray.length-1].split("\\|")[0]);
 //                    double finishTime = Double.parseDouble(messageArray[messageArray.length-1].split("\\|")[1]);
-                    double startTime = sendTimes.get(Integer.parseInt(messageArray[1]));
+                    double startTime = sendTimes.get(message);
 //                    double startTime = Double.parseDouble(messageArray[3]);
                     finishTimes.add(finishTime-startTime);
+
+//                double finishTime =  Double.parseDouble(messagesInfo.split(" \\| ")[1]);
+//                String [] messages  = messagesInfo.split(operator.getMessageSeparator());
+//                for (String message: messages){
+//                    String []messageArray = message.split(" ");
+////                    double startTime = Double.parseDouble(messageArray[messageArray.length-1].split("\\|")[0]);
+////                    double finishTime = Double.parseDouble(messageArray[messageArray.length-1].split("\\|")[1]);
+//                    double startTime = sendTimes.get(Integer.parseInt(messageArray[1]));
+////                    double startTime = Double.parseDouble(messageArray[3]);
+//                    finishTimes.add(finishTime-startTime);
                 }
             }
        //    finishTimes.add(operator.getRunningIntervals().get(s).getValue());
         });
-//        for (Operator operator : this.operators){
-//            if (operator.getRunningIntervals().size()!=0){
-//                for (Pair<Double, Double> time : operator.getRunningIntervals()){
-//                    double processingTime =   time.getValue() - time.getKey();
-//                    System.out.println(operator.getName() + " : " + processingTime);
-//                }
-//            }
-//        }
-//        System.out.println("========");
-
         return finishTimes.stream().mapToDouble(v -> v).average().orElseThrow();
     }
 
     public List<Operator> getSinks() {
-        List<Operator> sinks = new ArrayList<>();
-
-        this.getOperators().stream().filter(operator -> operator.getType() == Operator.OperatorType.SINK).
-                forEach(sinks::add);
-
-        return sinks;
+       return this.sinks;
     }
 
     public Operator getOperatorById(int id) {

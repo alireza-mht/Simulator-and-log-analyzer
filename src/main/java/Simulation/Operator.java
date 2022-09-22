@@ -13,7 +13,7 @@ public class Operator {
 
     private String name;
     private int id;
-    private final int instructionSize;
+    private final double instructionSize;
     private OperatorType type;
 
     //selectivity ratio = inRate/outRate
@@ -31,6 +31,7 @@ public class Operator {
     private EdgeNode assignedEdgeNode;
     private PriorityQueue<Pair<Event, Integer>> savedMessages =
             new PriorityQueue<>((a, b) -> (int) (a.getKey().getReceivingTime() - b.getKey().getReceivingTime()));
+    private int numberOfSavedMessages;
     Random random;
 
 
@@ -43,9 +44,9 @@ public class Operator {
     private Map<Operator, Double> downstreamMessages;
     private Map<Operator, Double> upstreamMessages;
 
-    private String messages="";
-    private final String messageSeparator =" - ";
-    private List<String> sinkMessageSaver = new ArrayList<>();
+    private List<Integer> messages = new ArrayList<>();
+    private final String messageSeparator = " - ";
+    private Map<List<Integer>, Double> sinkMessageSaver = new HashMap<>();
     //Probability rate to each of downstream operator
     private Map<Operator, Double> probabilityRate;
 
@@ -59,7 +60,7 @@ public class Operator {
         this.name = name;
     }
 
-    public Operator(int id, String name, double productivityRatio, double inRate, double outRate, int instructionSize, OperatorType type) {
+    public Operator(int id, String name, double productivityRatio, double inRate, double outRate, double instructionSize, OperatorType type) {
         this.id = id;
         this.name = name;
         this.productivityRatio = productivityRatio;
@@ -71,7 +72,7 @@ public class Operator {
         this.random = new Random(2);
     }
 
-    public Operator(int id, String name, double incomingMessageSize, double outgoingMessageSize, double inRate, double outRate, int instructionSize, OperatorType type) {
+    public Operator(int id, String name, double incomingMessageSize, double outgoingMessageSize, double inRate, double outRate, double instructionSize, OperatorType type) {
         this.id = id;
         this.name = name;
         this.incomingMessageSize = incomingMessageSize;
@@ -95,10 +96,12 @@ public class Operator {
 
     public List<Integer> receiveEvent(Event event) {
         this.savedMessages.add(new Pair<>(event, event.getNumberOfMessages()));
-        if (this.messages.equals(""))
-            this.messages = this.messages + event.getMessage();
-        else
-            this.messages =   this.messages + this.messageSeparator + event.getMessage();
+        this.numberOfSavedMessages += event.getNumberOfMessages();
+        this.messages.addAll(event.getMessage());
+//        if (this.messages.isEmpty())
+//            this.messages.addAll( event.getMessage());
+//        else
+//            this.messages =   this.messages + this.messageSeparator + event.getMessage();
 //        this.messages =  event.getMessage() + " | " + this.messages + " _ " + this.name + " $ ";
         if (isThereMessages()) {
             return this.processEvents();
@@ -113,20 +116,22 @@ public class Operator {
     public List<Integer> processEvents() {
 
         double maxReceivingTime = 0;
-        int messages = 0;
+        int messagesNumber = 0;
 
-        while (messages < inRate) {
+        while (messagesNumber < inRate) {
 
             if (savedMessages.peek() != null) {
-                messages += savedMessages.peek().getValue();
+                messagesNumber += savedMessages.peek().getValue();
             }
             assert savedMessages.peek() != null;
             //the time when the resource is idle or the time that the message is recived
             maxReceivingTime = Math.max(maxReceivingTime, savedMessages.peek().getKey().getReceivingTime());
             Pair<Event, Integer> temp = savedMessages.remove();
-            if (messages > inRate)
+            numberOfSavedMessages -= temp.getValue();
+            if (messagesNumber > inRate) {
                 savedMessages.add(new Pair<>(temp.getKey(),
-                        (int) (messages - inRate)));
+                        (int) (messagesNumber - inRate)));
+            }
         }
 
         double startTime = maxReceivingTime;
@@ -145,18 +150,18 @@ public class Operator {
         //when it is not the sink
         if (!(this.type == OperatorType.SINK)) {
             //the for is for double operator so we need to send event to both of downstream operators
-            for (int i = 0; i < outRate ; i++) {
+            for (int i = 0; i < outRate; i++) {
                 specifyEventDestination().forEach(operator -> results.addAll(this.sendEvent(operator,
-                        (int) this.outRate,
+                       1,
                         finalProcessingTime, this.messages)));
             }
-            this.messages ="";
+            this.messages = new ArrayList<>();
             return results;
 
         } else { // when it is sink and it has been run for one time
-            this.sinkMessageSaver.add(this.messages + " | " + finalProcessingTime);
+            this.sinkMessageSaver.put(this.messages, finalProcessingTime);
             results.add(id);
-            this.messages ="";
+            this.messages = new ArrayList<>();
             return results;
         }
 
@@ -173,7 +178,7 @@ public class Operator {
 //    }
     }
 
-    public List<Integer> sendEvent(Operator receiver, int numberOfMessages, double finalProcessingTime, String messages) throws NullPointerException {
+    public List<Integer> sendEvent(Operator receiver, int numberOfMessages, double finalProcessingTime, List<Integer> messages) throws NullPointerException {
 
         Event event;
         if (receiver.getAssignedEdgeNode().equals(this.assignedEdgeNode)) {
@@ -184,7 +189,7 @@ public class Operator {
             event = new Event(this, receiver, messages, numberOfMessages, this.outgoingMessageSize,
                     finalProcessingTime, finalProcessingTime + latency + this.assignedEdgeNode.getEdgeNetwork().
                     propagationDelay(this.assignedEdgeNode, receiver.getAssignedEdgeNode(),
-                            numberOfMessages * ((receiver.getIncomingMessageSize()))));
+                            numberOfMessages * (((receiver.getIncomingMessageSize()+this.getOutgoingMessageSize())/2))));
         }
         Double empty = this.sentMessages.get(receiver);
         if (empty != null)
@@ -196,8 +201,8 @@ public class Operator {
 
     public boolean isThereMessages() {
 
-        int numberOfReceivedMessage = this.savedMessages.stream().map(Pair::getValue).mapToInt(Integer::intValue).sum();
-        return numberOfReceivedMessage >= this.inRate;
+//        int numberOfReceivedMessage = this.savedMessages.stream().map(Pair::getValue).mapToInt(Integer::intValue).sum();
+        return numberOfSavedMessages >= this.inRate;
 
     }
 
@@ -207,13 +212,20 @@ public class Operator {
                 probabilityRate.values().stream().mapToDouble(v -> v).sum() == probabilityRate.size()) {
             return new ArrayList<>(probabilityRate.keySet());
         }
-
-        List<Operator> operators = new ArrayList<>();
-        HashMap<Operator, Double> newScale = new HashMap<>();
-
         var wrapper = new Object() {
             double value;
         };
+        List<Operator> operators = new ArrayList<>();
+//        HashMap<Operator, Double> newScale = new LinkedHashMap<>();
+        List<Map.Entry<Operator, Double>> list = new LinkedList<Map.Entry<Operator, Double>>(this.probabilityRate.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        Map<Operator, Double> newScale = new LinkedHashMap<>();
+        for (Map.Entry<Operator, Double> member : list) {
+            wrapper.value += member.getValue();
+            newScale.put(member.getKey(), wrapper.value);
+        }
+        String a = "s";
+
 //        int reRangeValue = 0;
 //        for (Map.Entry<Operator, Double> map : probabilityRate.entrySet()){
 //            if (map.getValue()+ reRangeValue > )
@@ -224,11 +236,11 @@ public class Operator {
 //        if (this.name.equals("v3"))
 //            probabilityRate.forEach((key,value) ->System.out.println(key.getName() + "-" + value ));
 //        this.probabilityRate =probabi
-        this.probabilityRate.forEach((key, value) -> {
-
-            wrapper.value += value;
-            newScale.put(key, wrapper.value);
-        });
+//        this.probabilityRate.forEach((key, value) -> {
+//
+//            wrapper.value += value;
+//            newScale.put(key, wrapper.value);
+//        });
         double randomValue = this.random.nextDouble() * Collections.max(newScale.values());
         for (Map.Entry<Operator, Double> map : newScale.entrySet()) {
 //            System.out.println(map.getKey().name);
@@ -291,7 +303,7 @@ public class Operator {
         return outgoingMessageSize;
     }
 
-    public double getIncomingMessageSize(){
+    public double getIncomingMessageSize() {
         return incomingMessageSize;
     }
 
@@ -300,15 +312,17 @@ public class Operator {
         this.setRunningIntervals(new ArrayList<>());
         this.savedMessages = new PriorityQueue<>((a, b) -> (int) (a.getKey().getReceivingTime() - b.getKey().getReceivingTime()));
 //        this.random = new Random(2);
-        this.sinkMessageSaver = new ArrayList<>();
-        this.messages="";
+        this.sinkMessageSaver = new HashMap<>();
+        numberOfSavedMessages = 0;
+        this.messages = new ArrayList<>();
     }
 
     public void localRest() {
         this.setRunningIntervals(new ArrayList<>());
-        this.sinkMessageSaver = new ArrayList<>();
+        this.sinkMessageSaver = new HashMap<>();
         this.savedMessages = new PriorityQueue<>((a, b) -> (int) (a.getKey().getReceivingTime() - b.getKey().getReceivingTime()));
-        this.messages="";
+        this.messages = new ArrayList<>();
+        numberOfSavedMessages = 0;
 
 //        this.random = new Random(id+2);
     }
@@ -321,7 +335,7 @@ public class Operator {
         this.incomingDataRate = incomingDataRate;
     }
 
-    public int getInstructionSize() {
+    public double geInstructionSize() {
         return instructionSize;
     }
 
@@ -329,7 +343,7 @@ public class Operator {
         return messageSeparator;
     }
 
-    public List<String> getSinkMessageSaver() {
+    public Map<List<Integer>, Double> getSinkMessageSaver() {
         return sinkMessageSaver;
     }
 
@@ -343,7 +357,7 @@ public class Operator {
         SINK
     }
 
-    public OperatorType getOperatorType(){
+    public OperatorType getOperatorType() {
         return this.type;
     }
 

@@ -265,7 +265,7 @@ public class LogAnalysis {
     }
 
     //we calculate the sum of all the message bytes transfered among rthe devices and then we divide it by the total number of messages beein g transfered
-    public List<Map<String, Double>> messageSizes() {
+    public List<Map<String, Double>> calculateMessageSizes() {
         Map<String, List<Double>> temp = new HashMap<>();
         Map<String, Double> messageSizeSum = new HashMap<>();
         Map<String, Double> inMessageSize = new HashMap<>();
@@ -314,7 +314,7 @@ public class LogAnalysis {
 
     }
 
-    public Map<String, Double> inputRate() {
+    public Map<String, Double> calculateInputRate() {
 //         return boltMeanRateMap.entrySet().stream().filter(map -> spouts.contains(map.getKey())).
 //               collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 //        List<String> spoutTasks = new ArrayList<>();
@@ -336,7 +336,7 @@ public class LogAnalysis {
         return inputRates;
     }
 
-    public Map<String, Double> outputRate() {
+    public Map<String, Double> calculateOutputRate() {
         Map<String, Double> outputRates = new HashMap<>();
         for (Map.Entry<String, Integer> totalBoltOutgoing : totalBoltOutgoingTupleMap.entrySet()) {
             String taskName = totalBoltOutgoing.getKey();

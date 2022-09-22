@@ -1,5 +1,8 @@
 package Simulation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Event {
     private Operator sender;
     private Operator receiver;
@@ -7,9 +10,9 @@ public class Event {
     private double messagesSize;
     private double sendingTime;
     private double receivingTime;
-    private String message;
+    private List<Integer> message;
 
-    public Event(Operator sender, Operator receiver, String message, int numberOfMessages, double messagesSize, double sendingTime, double receivingTime) {
+    public Event(Operator sender, Operator receiver, List<Integer> message, int numberOfMessages, double messagesSize, double sendingTime, double receivingTime) {
         this.sender = sender;
         this.receiver = receiver;
         this.numberOfMessages = numberOfMessages;
@@ -51,7 +54,7 @@ public class Event {
         this.sendingTime = sendingTime;
     }
 
-    public String getMessage() {
+    public List<Integer> getMessage() {
         return message;
     }
 

@@ -1,8 +1,6 @@
 package Simulation.GWO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Matt
@@ -43,7 +41,10 @@ public class WolfPack {
             List<Integer> pos = new ArrayList<>();
             for (int j = 0; j < D; j++) {
                 int P = (int) (rand.nextDouble() * (uLimits.get(j) - lLimits.get(j)) + lLimits.get(j));
-                pos.add(P);
+                if (!pos.contains(P))
+                    pos.add(P);
+                else
+                    j--;
             }
             pack.add(new Wolf(pos));
         }
@@ -82,21 +83,6 @@ int m=0;
     private void chooseLeadingWolves(Function f, Comparator comp) {
 
         for (Wolf w : pack) {
-//            if (m==0) {
-//                List<Integer> array = new ArrayList<>(Arrays.asList(9, 5, 30, 29, 2, 27, 3, 10, 23,1));
-//                double fff = f.eval(array);
-//                System.out.println(fff);
-//            }
-//            if (m==1) {
-//                List<Integer> array2 = new ArrayList<>(Arrays.asList(21, 22, 23, 4, 5, 26, 27, 3, 1));
-//                double fffm = f.eval(array2);
-//                System.out.println(fffm);
-//            }
-//            if (m==2) {
-//                double bbb = f.eval(new ArrayList<>(Arrays.asList(21, 22, 23, 24, 25, 26, 27, 28, 29)));
-//                System.out.println(bbb);
-//            }
-//            m++;
             double fVal = f.eval(w.getPos());
             if (comp.compare(fVal, wAlphaBest)) {
                 wAlpha = w;
@@ -234,9 +220,12 @@ int m=0;
 
             if (best == null)
                 best = wAlpha;
+
             if (f.eval(wAlpha.getPos()) < f.eval(best.getPos()))
                 best = wAlpha;
+
         }
+
         return new WolfPackSolution(best, progression, f);
     }
 
